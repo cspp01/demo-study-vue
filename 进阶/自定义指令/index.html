@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-focus/>
+    <elel></elel>
+</div>
+<script src="https://unpkg.com/vue"></script>
+<script>
+    /* 注册全局指令 */
+    Vue.directive('focus', {
+        inserted (el) {
+            console.log(el)
+            el.focus()
+        }
+    })
+    let elel = {
+        template: '<h1 v-fff="el + \'123\'">{{el}}</h1>',
+        data () {
+            return {
+                el: 'elel'
+            }
+        },
+        /* 局部自定义指令 */
+        directives: {
+            'fff': {
+                inserted (el,o) {
+                    console.log(o.value)
+                    el.innerHTML='123'
+                }
+            }
+        }
+    }
+    new Vue({
+        el: '#app',
+        components: {
+            elel
+        }
+    })
+</script>
+</body>
+</html>

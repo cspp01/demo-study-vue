@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    {{b}}
+    <div @click= "a()">a123</div>
+    <div @click= "aa()">aa123</div>
+    <div @click= "aaa()">aaa123</div>
+</div>
+<script src="https://unpkg.com/vue"></script>
+<script>
+    /*混合 (mixins) 是一种分发 Vue 组件中可复用功能的非常灵活的方式。
+    混合对象可以包含任意组件选项。当组件使用混合对象时，所有混合对象
+    的选项将被混入该组件本身的选项。*/
+    /*当组件和混合对象含有同名选项时，这些选项将以恰当的方式混合。
+    比如，同名钩子函数将混合为一个数组，因此都将被调用。另外，
+    混合对象的 钩子将在组件自身钩子 之前 调用 */
+    /*值为对象的选项，例如 methods, components 和 directives，
+    将被混合为同一个对象。两个对象键名冲突时，取组件对象的键值对。*/
+    var mymixin1 = {
+        created () {
+            console.log('混合1的created')
+        },
+        methods: {
+            a () {
+                console.log('你点了混合1的aaa方法')
+            }
+        }
+    }
+    var mymixin2 = {
+        created () {
+            console.log('混合2的created')
+        },
+        methods: {
+            aa () {
+                console.log('你点了混合2的aaa方法')
+            }
+        }
+    }
+    new Vue({
+        el: '#app',
+        mixins: [
+            mymixin1, mymixin2
+        ],
+        data: {
+            b: 123
+        },
+        created () {
+            console.log('Vue实例的created')
+        },
+        methods: {
+            aaa () {
+                console.log('Vue实例的aaaaa方法')
+            }
+        }
+    })
+</script>
+</body>
+</html>

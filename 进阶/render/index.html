@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <App :leav="1"><p>12312</p>123123<div slot="ppp">12312312</div></App>
+</div>
+<!--<script type="text/x-template" id="anchored">-->
+    <!--<section>-->
+        <!--<h1 v-if="leav===1">{{title}}</h1>-->
+        <!--<h2 v-else-if="leav===2">{{title}}</h2>-->
+        <!--<h3 v-else-if="leav===3">{{title}}</h3>-->
+        <!--<h4 v-else-if="leav===4">{{title}}</h4>-->
+        <!--<h5 v-else-if="leav===5">{{title}}</h5>-->
+        <!--<h6 v-else-if="leav===6">{{title}}</h6>-->
+    <!--</section>-->
+<!--</script>-->
+<script src="https://unpkg.com/vue"></script>
+<script>
+    var App = {
+        // template: '#anchored',
+        render (h) {
+            var b = this.$slots.ppp
+            return h('h' + this.leav, {
+                style: {
+                    color: '#f00'
+                },
+                class: [ 'aaa' ],
+                attrs: {
+                    id: '1awed',
+                    name: 'asdsd'
+                },
+                domProps: {
+                    // innerHTML: 'from domProps',
+                },
+                // 事件监听器基于 "on"
+                // 所以不再支持如 v-on:keyup.enter 修饰器
+                on: {
+                    click: e => {
+                        console.log(e)
+                    }
+                }
+            }, ['哈哈哈', this.$slots.default, this.$slots.ppp])
+        },
+        props: [
+            'leav'
+        ],
+        created () {
+            console.log(this.$slots)
+        }
+    }
+    new Vue({
+        el: '#app',
+        components: {
+            App
+        }
+    })
+</script>
+</body>
+</html>

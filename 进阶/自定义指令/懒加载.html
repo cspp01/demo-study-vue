@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <img v-lazy="src + 'http://youimg1.c-ctrip.com/target/fd/tg/g3/M04/06/5C/CggYGlXu4wOASBGYACf72WF7Mho749.jpg'"/>
+</div>
+<script src="https://unpkg.com/vue"></script>
+<script>
+    Vue.directive('lazy', {
+        inserted (el, o) {
+            console.log(1)
+            el.src = 'http://p1aysuwsx.bkt.clouddn.com/dl_03.png'
+            el.onload = () => {
+                console.log(123123)
+                el.src = o.value
+            }
+        }
+    })
+    new Vue({
+        el: '#app',
+        data: {
+            src: ''
+        }
+    })
+</script>
+</body>
+</html>

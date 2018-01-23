@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            padding:0;
+            margin:0;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <router-view></router-view>
+    <div style="position:fixed;top:0;width:100%;color:#fff;">
+        <router-link to="/">首页</router-link>
+        <router-link to="/cart">购物车</router-link>
+        <router-link to="/user">我的</router-link>
+    </div>
+</div>
+<script src="https://unpkg.com/vue"></script>
+<script src="https://cdn.bootcss.com/vue-router/3.0.1/vue-router.js"></script>
+<script>
+    const home = {
+        template: '<div v-if="v"><div style="height:100px;background:#64b253;padding-top:100px;" v-for="i in a" @click="v=false">首页</div></div><div style="padding-top:100px;" v-else><div @click="aaa">《-</div>list</div>',
+        data () {
+            return {
+                a: 10,
+                num: 1,
+                once: false,
+                v: true,
+                st: 0
+            }
+        },
+        methods: {
+            aaa () {
+                console.log(this.st)
+                document.documentElement.scrollTop = this.st
+                this.v=true
+            }
+        },
+        updated () {
+            console.log(this.v)
+        },
+        created () {
+            if (this.v) {
+                window.onscroll = () => {
+                    console.log(this.st)
+                    this.st = document.documentElement.scrollTop
+                    if (document.documentElement.scrollTop >= 1000 && document.documentElement.scrollTop <= 1200) {
+                        if (!this.once) {
+                            this.a += 10
+                            this.num ++
+                            this.once = true
+                        }
+                        setTimeout(() => {
+                            this.once = false
+                        }, 1000)
+                    }
+                }
+            }
+        }
+    }
+    const cart = {
+        template: '<div style="height:2000px;background:#ff9212;padding-top:100px;">购物车</div>'
+    }
+    const user = {
+        template: '<div style="height:2000px;background:#ed6a55;padding-top:100px;">我的</div>'
+    }
+    const list = {
+        template: '<div style="height:2000px;background:#ff9212;padding-top:100px;">list</div>'
+    }
+    var router = new VueRouter({
+        routes: [
+            {
+                path: '/',
+                component: home
+            },
+            {
+                path: '/cart',
+                component: cart
+            },
+            {
+                path: '/user',
+                component: user
+            },
+            {
+                path: '/list',
+                component: list
+            }
+        ],
+        scrollBehavior (to, from, savedPosition) {
+            console.log(to, from, savedPosition)
+            if (savedPosition) {
+                return savedPosition
+            } else {
+                return { x: 0, y: 0 }
+            }
+        }
+    })
+    new Vue({
+        el: '#app',
+        router
+    })
+</script>
+</body>
+</html>
